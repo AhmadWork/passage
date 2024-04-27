@@ -1,0 +1,29 @@
+version: "2.4"  # It's a good practice to use a specific minor version for better feature support
+services:
+  front:
+    build: .
+    container_name: load-balancer
+    ports:
+      - "3030:3030"
+    command: --backends "fms-http://backend:8001,lms-http://app:80,http://backend:8000"
+    networks:
+      - my-custom-network
+
+  web1:
+    image: strm/helloworld-http
+    networks:
+      - my-custom-network
+
+  web2:
+    image: strm/helloworld-http
+    networks:
+      - my-custom-network
+
+  web3:
+    image: strm/helloworld-http
+    networks:
+      - my-custom-network
+
+networks:
+  my-custom-network:
+    external: true
